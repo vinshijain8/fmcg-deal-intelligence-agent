@@ -1,16 +1,3 @@
-"""
-newsletter.py
-
-Purpose:
----------
-Generate an FMCG newsletter using Gemini.
-
-Input:
-    data/scored_news.csv
-
-Output:
-    output/newsletter.md
-"""
 
 import os
 import pandas as pd

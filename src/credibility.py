@@ -1,17 +1,3 @@
-"""
-credibility.py
-
-Purpose:
----------
-Assign credibility scores to news articles.
-
-Input:
-    data/deduplicated_news.csv
-
-Output:
-    data/scored_news.csv
-"""
-
 import pandas as pd
 
 

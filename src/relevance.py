@@ -1,23 +1,6 @@
-"""
-relevance.py
-
-Purpose:
----------
-Filter only FMCG deal-related articles.
-
-Input:
-    data/cleaned_news.csv
-
-Output:
-    data/relevant_news.csv
-"""
 
 import os
 import pandas as pd
-
-# --------------------------------------------------
-# Deal Keywords
-# --------------------------------------------------
 
 DEAL_KEYWORDS = [
     "acquisition",
@@ -33,10 +16,6 @@ DEAL_KEYWORDS = [
     "stake acquisition",
     "strategic investment in"
 ]
-
-# --------------------------------------------------
-# FMCG Keywords
-# --------------------------------------------------
 
 FMCG_KEYWORDS = [
     "fmcg",
@@ -80,10 +59,6 @@ FMCG_KEYWORDS = [
     "unilever"
 ]
 
-# --------------------------------------------------
-# Exclude Keywords
-# --------------------------------------------------
-
 EXCLUDE_KEYWORDS = [
     "sensex",
     "nifty",
@@ -125,11 +100,6 @@ EXCLUDE_KEYWORDS = [
     "amd"
 ]
 
-
-# --------------------------------------------------
-# Relevance Function
-# --------------------------------------------------
-
 def is_relevant(title, description):
 
     title = str(title)
@@ -146,11 +116,6 @@ def is_relevant(title, description):
     fmcg_found = any(word in text for word in FMCG_KEYWORDS)
 
     return deal_found and fmcg_found
-
-
-# --------------------------------------------------
-# Main Function
-# --------------------------------------------------
 
 def filter_relevant_news():
 

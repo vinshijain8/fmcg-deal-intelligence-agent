@@ -1,17 +1,3 @@
-"""
-deduplicate.py
-
-Purpose:
----------
-Remove near-duplicate news articles.
-
-Input:
-    data/relevant_news.csv
-
-Output:
-    data/deduplicated_news.csv
-"""
-
 import os
 import pandas as pd
 from rapidfuzz import fuzz

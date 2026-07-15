@@ -1,12 +1,3 @@
-"""
-exporter.py
-
-Purpose:
----------
-Export newsletter and data into
-DOCX and JSON formats.
-"""
-
 import os
 import json
 import pandas as pd
@@ -17,9 +8,6 @@ def export_files():
 
     os.makedirs("output", exist_ok=True)
 
-    # -----------------------
-    # Export JSON
-    # -----------------------
 
     df = pd.read_csv("data/scored_news.csv")
 
@@ -29,9 +17,7 @@ def export_files():
         indent=4
     )
 
-    # -----------------------
-    # Export Word
-    # -----------------------
+
 
     with open(
         "output/newsletter.md",

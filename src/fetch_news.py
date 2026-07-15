@@ -1,14 +1,3 @@
-"""
-fetch_news.py
-
-Purpose:
----------
-1. Connect to NewsAPI
-2. Download latest FMCG deal news
-3. Convert JSON to a Pandas DataFrame
-4. Save raw data as CSV
-"""
-
 import os
 import requests
 import pandas as pd
@@ -17,13 +6,6 @@ from dotenv import load_dotenv
 
 
 def fetch_news():
-
-    # -------------------------------------------------------
-    # Load API Keys
-    # Supports both:
-    # - Local (.env)
-    # - Streamlit Cloud (st.secrets)
-    # -------------------------------------------------------
 
     load_dotenv()
 
@@ -34,10 +16,6 @@ def fetch_news():
 
     if not NEWS_API_KEY:
         raise ValueError("NEWS_API_KEY not found.")
-
-    # -------------------------------------------------------
-    # NewsAPI endpoint
-    # -------------------------------------------------------
 
     URL = "https://newsapi.org/v2/everything"
 
@@ -55,10 +33,6 @@ def fetch_news():
     print("=" * 60)
     print("Fetching news from NewsAPI...")
     print("=" * 60)
-
-    # -------------------------------------------------------
-    # Fetch news
-    # -------------------------------------------------------
 
     for query in queries:
 
@@ -96,10 +70,6 @@ def fetch_news():
 
                 "URL": article.get("url")
             })
-
-    # -------------------------------------------------------
-    # DataFrame
-    # -------------------------------------------------------
 
     df = pd.DataFrame(all_articles)
 
