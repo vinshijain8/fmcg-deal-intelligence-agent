@@ -2,6 +2,10 @@
 
 An AI-powered business intelligence application that automatically collects, filters, scores, and summarizes recent FMCG merger, acquisition, and investment news into a concise executive newsletter using Gemini AI.
 
+## 🌐 Live Demo
+
+**Streamlit App:**  
+https://fmcg-deal-intelligence-agent-7hjyzqetv6yr2erro4dwmz.streamlit.app/
 
 ## Problem Statement
 
