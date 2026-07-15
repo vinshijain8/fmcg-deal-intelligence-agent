@@ -12,26 +12,35 @@ Purpose:
 import os
 import requests
 import pandas as pd
+import streamlit as st
 from dotenv import load_dotenv
 
 
 def fetch_news():
+
     # -------------------------------------------------------
-    # Load environment variables (.env)
+    # Load API Keys
+    # Supports both:
+    # - Local (.env)
+    # - Streamlit Cloud (st.secrets)
     # -------------------------------------------------------
+
     load_dotenv()
 
-    NEWS_API_KEY = os.getenv("NEWS_API_KEY")
+    if "NEWS_API_KEY" in st.secrets:
+        NEWS_API_KEY = st.secrets["NEWS_API_KEY"]
+    else:
+        NEWS_API_KEY = os.getenv("NEWS_API_KEY")
 
     if not NEWS_API_KEY:
-        raise ValueError("NEWS_API_KEY not found in .env file")
+        raise ValueError("NEWS_API_KEY not found.")
 
     # -------------------------------------------------------
     # NewsAPI endpoint
     # -------------------------------------------------------
+
     URL = "https://newsapi.org/v2/everything"
 
-    # Multiple search queries for better coverage
     queries = [
         "FMCG acquisition",
         "FMCG merger",
@@ -48,8 +57,9 @@ def fetch_news():
     print("=" * 60)
 
     # -------------------------------------------------------
-    # Fetch articles for every query
+    # Fetch news
     # -------------------------------------------------------
+
     for query in queries:
 
         print(f"\nSearching: {query}")
@@ -68,50 +78,55 @@ def fetch_news():
             print(f"Error: {response.status_code}")
             continue
 
-        data = response.json()
-
-        articles = data.get("articles", [])
+        articles = response.json().get("articles", [])
 
         print(f"Found {len(articles)} articles")
 
         for article in articles:
 
             all_articles.append({
+
                 "Title": article.get("title"),
+
                 "Description": article.get("description"),
+
                 "Source": article.get("source", {}).get("name"),
+
                 "PublishedAt": article.get("publishedAt"),
+
                 "URL": article.get("url")
             })
 
     # -------------------------------------------------------
-    # Convert to DataFrame
+    # DataFrame
     # -------------------------------------------------------
+
     df = pd.DataFrame(all_articles)
 
-    # -------------------------------------------------------
-    # Remove exact duplicate URLs
-    # -------------------------------------------------------
-    df.drop_duplicates(subset="URL", inplace=True)
+    df.drop_duplicates(
+        subset="URL",
+        inplace=True
+    )
 
-    # -------------------------------------------------------
-    # Create data folder if it doesn't exist
-    # -------------------------------------------------------
-    os.makedirs("data", exist_ok=True)
+    os.makedirs(
+        "data",
+        exist_ok=True
+    )
 
-    # -------------------------------------------------------
-    # Save CSV
-    # -------------------------------------------------------
     output_path = "data/raw_news.csv"
 
-    df.to_csv(output_path, index=False)
+    df.to_csv(
+        output_path,
+        index=False
+    )
 
     print("\n" + "=" * 60)
     print(f"Total unique articles: {len(df)}")
     print(f"Saved to: {output_path}")
     print("=" * 60)
 
-    print("\nFirst 5 Articles\n")
+    print("\nPreview\n")
+
     print(df.head())
 
     return df

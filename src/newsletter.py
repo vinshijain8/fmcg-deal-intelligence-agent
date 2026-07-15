@@ -14,6 +14,7 @@ Output:
 
 import os
 import pandas as pd
+import streamlit as st
 from dotenv import load_dotenv
 from google import genai
 
@@ -22,16 +23,18 @@ def generate_newsletter():
 
     load_dotenv()
 
-    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+    # Supports both Streamlit Cloud and local .env
+    if "GEMINI_API_KEY" in st.secrets:
+        GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
+    else:
+        GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
     if not GEMINI_API_KEY:
         raise ValueError("GEMINI_API_KEY not found.")
 
     client = genai.Client(api_key=GEMINI_API_KEY)
 
-    INPUT_FILE = "data/scored_news.csv"
-
-    df = pd.read_csv(INPUT_FILE)
+    df = pd.read_csv("data/scored_news.csv")
 
     articles = ""
 
@@ -65,7 +68,7 @@ Deal Type:
 Summary:
 Business Impact:
 
-Finally provide
+Finally provide:
 
 Key Trends
 
